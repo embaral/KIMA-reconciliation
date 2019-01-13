@@ -8,7 +8,7 @@ PLACE_URL = "http://kimaorg.azurewebsites.net/api/Places/Place/{place_id}"
 
 app = Flask(__name__)
 address = '0.0.0.0'
-port = '80'
+port = '3200'
 
 PLACE_TYPE = {"id": "T1", "name": "Place"}
 PROPERTIES_MAPPING = {
