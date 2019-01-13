@@ -58,9 +58,6 @@ def search_entity(query, properties_q=[]):
     if not json_res:
         return []
 
-    if properties_q:
-        return search_entity_with_props(properties_q, json_res)
-
     num_of_matches = len(json_res)
     if num_of_matches == 1:
         return [{
@@ -69,6 +66,9 @@ def search_entity(query, properties_q=[]):
             "score": 100.0,
             "match": True,
             "type": [PLACE_TYPE]}]
+
+    if properties_q:
+        return search_entity_with_props(properties_q, json_res)
 
     for match in json_res:
         entity_id = match["placeId"]
@@ -93,11 +93,10 @@ def search_entity_with_props(properties_q, json_res):
     max_index = properties_match.index(max_matches)
     for idx, match in enumerate(json_res):
         entity_id = match["placeId"]
-        score = (properties_match[idx] / len(properties_q))
         res_to_add = {
             "id": str(entity_id),
             "name": str(match["primary_heb_full"]),
-            "score": 100.0 * score,
+            "score": 100.0 * avg_prop_match_ratio(match, properties_q),
             "match": idx == max_index and num_of_max == 1,
             "type": [PLACE_TYPE]}
         matches.append(res_to_add)
@@ -111,6 +110,13 @@ def prop_match_ratio(entity_id, prop):
     return SequenceMatcher(None, entity_res[PROPERTIES_MAPPING[prop_id]["id"]], prop_val).ratio()
 
 
+def avg_prop_match_ratio(match, properties_q):
+    ratios = []
+    for prop in properties_q:
+        ratios.append(prop_match_ratio(match["placeId"], prop))
+    return sum(ratios) / float(len(ratios))
+
+
 def max_prop_match_ratio(properties_q, json_res):
     winning_match = []
     for prop in properties_q:
@@ -118,7 +124,8 @@ def max_prop_match_ratio(properties_q, json_res):
         for match in json_res:
             ratios.append(prop_match_ratio(match["placeId"], prop))
         max_ratio = max(ratios)
-        winning_match.append([{idx: ratio} for idx, ratio in enumerate(ratios) if ratio == max_ratio])
+        if max_ratio > 0.5:
+            winning_match.append([{idx: ratio} for idx, ratio in enumerate(ratios) if ratio == max_ratio])
 
     return winning_match
 
