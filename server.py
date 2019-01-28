@@ -3,8 +3,8 @@ import json
 import requests
 from difflib import SequenceMatcher
 
-SEARCH_VARIANTS_URL = "http://kimaorg.azurewebsites.net/api/Variants/SearchVariants/{query}/100/1"
-PLACE_URL = "http://kimaorg.azurewebsites.net/api/Places/Place/{place_id}"
+SEARCH_VARIANTS_URL = "http://data.geo-kima.org/api/Variants/SearchVariants/{query}/100/1"
+PLACE_URL = "http://data.geo-kima.org/api/Places/Place/{place_id}"
 
 app = Flask(__name__)
 address = '0.0.0.0'
@@ -213,7 +213,7 @@ def main():
         'identifierSpace': 'http://rdf.freebase.com/ns/type.object.id',
         'schemaSpace': 'http://rdf.freebase.com/ns/type.object.id',
         'view': {
-            'url': 'http://kimaorg.azurewebsites.net/Places/Details?id={{id}}'
+            'url': 'http://data.geo-kima.org/Places/Details?id={{id}}'
         },
         "defaultTypes": [],
         "extend": {
