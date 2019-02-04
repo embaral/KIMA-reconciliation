@@ -1,5 +1,8 @@
 ### Readme.md
 
+Digital Humanities For CS students 2019
+Adi Marantz and Embar Almog
+
 ### KIMA Reconciliation
 
  This is a reconciliation service that can be used in OpenRefine.
