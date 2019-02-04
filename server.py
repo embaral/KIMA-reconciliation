@@ -8,7 +8,7 @@ PLACE_URL = "http://data.geo-kima.org/api/Places/Place/{place_id}"
 
 app = Flask(__name__)
 address = '0.0.0.0'
-port = '3200'
+port = 3200
 
 PLACE_TYPE = {"id": "T1", "name": "Place"}
 PROPERTIES_MAPPING = {
