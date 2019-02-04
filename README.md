@@ -1,6 +1,6 @@
 ### Readme.md
 
-Digital Humanities For CS students 2019
+Digital Humanities For CS students 2019.
 Adi Marantz and Embar Almog
 
 ### KIMA Reconciliation
